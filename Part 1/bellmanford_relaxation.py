@@ -59,4 +59,4 @@ g1.add_edge(3, 5, -1)
 g1.add_edge(4, 2, 1)
 g1.add_edge(5, 4, -2)
 
-print(bellman_ford_approx(g1, 0, 1))
+#print(bellman_ford_approx(g1, 0, 1))
