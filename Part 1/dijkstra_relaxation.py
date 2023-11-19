@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(0, '/Users/okela/OneDrive/Desktop/Repos/3XB3-FinalProject')
 from final_project_part1 import *
 from min_heap import *
 
