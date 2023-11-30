@@ -29,12 +29,12 @@ def experiment1(G_sizes, k_ratios, source, num_trials, upper):
     for size in G_sizes:
         g = create_random_complete_graph(size, upper)
         for ratio in k_ratios:
-            k_value = int(size * ratio)
+            k_value = ratio
             avg_time = experiment_helper(g, k_value, source, num_trials)
             results[ratio].append(avg_time)
     
     for ratio in k_ratios:
-        plt.plot(G_sizes, results[ratio], label=f'k_ratio = {ratio}')
+        plt.plot(G_sizes, results[ratio], label=f'k_value = {ratio}')
     
     plt.xlabel('Graph sizes')
     plt.ylabel('Time')
@@ -46,7 +46,7 @@ def experiment1(G_sizes, k_ratios, source, num_trials, upper):
 G_sizes = []
 for i in range(100, 525, 25):
     G_sizes.append(i)
-k_ratios = [1, 1/2, 1/4, 1/25, 1/50]
+k_ratios = [1, 5, 10, 25]
 source = 0
 num_trials = 10
 upper = 1000
@@ -70,7 +70,7 @@ def experiment2_helper(G, source, k_ratios, numtrials):
     for ratio in k_ratios:
         relative_error = 0
         for i in range(numtrials):
-            k = int(graph_size * ratio)
+            k = ratio
             dist_approx = dijkstra_approx(G, source, k)
             total_distance_approx = total_dist(dist_approx)
 
@@ -89,7 +89,7 @@ def experiment2(G_sizes, k_ratios, source, upper, numtrials):
             results[ratio].append(accuracies[ratio])
             
     for ratio in k_ratios:
-        plt.plot(G_sizes, results[ratio], label=f'k_ratio = {ratio}')
+        plt.plot(G_sizes, results[ratio], label=f'k_value = {ratio}')
     plt.title('Accuracy vs Graph Size for Different k Ratios')
     plt.xlabel('Graph Size')
     plt.ylabel('Accuracy')
@@ -99,9 +99,9 @@ def experiment2(G_sizes, k_ratios, source, upper, numtrials):
     
 
 G_sizes2 = []
-for i in range(100, 450, 25):
+for i in range(100, 450, 50):
     G_sizes2.append(i)
-k_ratios2 = [1, 1/2, 1/4, 1/25, 1/50]
+k_ratios2 = [1, 2, 5, 10, 15]
 source2 = 0
 num_trials2 = 25
 upper2 = 1000
@@ -188,7 +188,7 @@ def experiment4_helper(G, source, k_ratios, numtrials):
     for ratio in k_ratios:
         relative_error = 0
         for i in range(numtrials):
-            k = int(graph_size * ratio)
+            k = ratio
             dist_approx = dijkstra_approx(G, source, k)
             total_distance_approx = total_dist(dist_approx)
 
@@ -219,7 +219,7 @@ def experiment4(G_sizes, k_ratios, source, upper, numtrials, probability):
 G_sizes4 = []
 for i in range(100, 450, 50):
     G_sizes4.append(i)
-k_ratios4 = [1, 1/2, 1/4, 1/25, 1/50]
+k_ratios4 = [1, 2, 5, 10, 15]
 source4 = 0
 num_trials4 = 25
 upper4 = 1000
