@@ -229,6 +229,6 @@ num_trials4 = 25
 upper4 = 1000
 probability2 = 0.1
 
-experiment3(G_sizes4, k_ratios4, source4, upper4, num_trials4, probability2)
+#experiment3(G_sizes4, k_ratios4, source4, upper4, num_trials4, probability2)
 
 
