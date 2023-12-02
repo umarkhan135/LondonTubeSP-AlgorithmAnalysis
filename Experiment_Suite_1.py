@@ -5,58 +5,10 @@ import matplotlib.pyplot as plt
 import timeit 
 
 
+
 '''
 *************
 Experiment 1
-*************
-
-
-
-def experiment_helper(G, k_value, source, num_trials):
-    count = 0
-    for _ in range(num_trials):
-        start_time = timeit.default_timer()
-        dijkstra_approx(G, source, k_value)
-        end_time = timeit.default_timer()
-        execution_time = end_time - start_time
-        count += execution_time
-    return count/num_trials
-
-
-def experiment1(G_sizes, k_value, source, num_trials, upper):
-    results = {value: [] for value in k_value}
-    
-    for size in G_sizes:
-        g = create_random_complete_graph(size, upper)
-        for value in k_value:
-            k_value = value
-            avg_time = experiment_helper(g, k_value, source, num_trials)
-            results[value].append(avg_time)
-    
-    for value in k_value:
-        plt.plot(G_sizes, results[value], label=f'k_value = {value}')
-    
-    plt.xlabel('Graph sizes')
-    plt.ylabel('Time')
-    plt.title('Graph size VS time for certain k values')
-    plt.grid(True)
-    plt.legend()
-    plt.show()
-    
-G_sizes = []
-for i in range(100, 525, 25):
-    G_sizes.append(i)
-k_value = [1, 5, 10, 25]
-source = 0
-num_trials = 10
-upper = 1000
-
-#experiment1(G_sizes, k_value, source, num_trials, upper)
-'''
-
-'''
-*************
-Experiment 2
 *************
 '''
 
@@ -111,7 +63,7 @@ upper1 = 1000
 
 '''
 *************
-Experiment 3
+Experiment 2
 *************
 '''
 
@@ -178,7 +130,7 @@ probability = [0.1, 0.2, 0.3, 0.5, 0.75]
 
 '''
 *************
-Experiment 4
+Experiment 3
 *************
 '''
 
