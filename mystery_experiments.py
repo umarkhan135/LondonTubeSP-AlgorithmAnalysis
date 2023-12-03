@@ -72,4 +72,25 @@ for i in range(10, 200, 10):
 upper = 1000
 num_trials = 10
 
-experiment(graph_sizes, upper, num_trials)
+#experiment(graph_sizes, upper, num_trials)
+
+'''
+****************
+Small Graph with Negative Edges Test
+****************
+'''
+
+g1 = DirectedWeightedGraph()
+for i in range(6):
+    g1.add_node(i)
+    
+g1.add_edge(0, 1, 8)
+g1.add_edge(0, 2, 10)
+g1.add_edge(1, 3, 1)
+g1.add_edge(2, 5, 2)
+g1.add_edge(3, 2, -4)
+g1.add_edge(3, 5, -1)
+g1.add_edge(4, 2, 1)
+g1.add_edge(5, 4, -2)
+
+#print(mystery(g1))
