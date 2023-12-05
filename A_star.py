@@ -12,7 +12,7 @@ def a_star(G, s, d, h):
         Q.insert(min_heap.Element(node, float("inf")))
         dist[node] = float("inf")
         pred[node] = None  # Initialize predecessors
-    Q.decrease_key(s, h[s])
+    Q.decrease_key(s, h(s))
     dist[s] = 0
     
     while not Q.is_empty():
@@ -27,7 +27,7 @@ def a_star(G, s, d, h):
             if dist[current_node] + G.w(current_node, neighbour) < dist[neighbour]:
                 dist[neighbour] = dist[current_node] + G.w(current_node, neighbour)
                 pred[neighbour] = current_node
-                fn = dist[current_node] + G.w(current_node, neighbour) + h[neighbour]
+                fn = dist[current_node] + G.w(current_node, neighbour) + h(neighbour)
                 Q.decrease_key(neighbour, fn)
 
         

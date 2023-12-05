@@ -70,6 +70,43 @@ for index, row in stations_df.iterrows():
 for index, row in connections_df.iterrows():
     tube_graph.add_connection(station1=row['station1'], station2=row['station2'])
 
+tube_graph.initialize_adjacency()
+
+# Assuming a_star function, TubeGraph class, and the CSV loading code are already defined
+
+# Example: Find the shortest path from station A to station B
+source_station_id = 1  # Replace 'A' with the actual ID of the source station
+destination_station_id = 2  # Replace 'B' with the actual ID of the destination station
+'''
+# Set the destination for heuristic calculation
+tube_graph.set_destination(destination_station_id)
+
+# Define a wrapper for the heuristic function to match expected format
+def heuristic_wrapper(node):
+    return tube_graph.heuristic(node)
+
+# Run the A* algorithm
+predecessor, path = a_star(tube_graph, source_station_id, destination_station_id, heuristic_wrapper)
+
+# Output the shortest path
+print("Shortest path from station", source_station_id, "to", destination_station_id, "is:", path)
+'''
+predecessor, distances = dijkstra2(tube_graph, source_station_id)
+
+# Reconstruct the shortest path
+path = []
+current = destination_station_id
+while current is not None and current in predecessor:
+    path.insert(0, current)
+    current = predecessor[current]
+
+# Output the shortest path
+if path:
+    print("Shortest path from station", source_station_id, "to", destination_station_id, "is:", path)
+else:
+    print("No path found from station", source_station_id, "to", destination_station_id)
+
+
 # destination_id = 2
 # tube_graph.set_destination(destination_id)
 
