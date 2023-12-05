@@ -2,6 +2,8 @@ def bsp_solution(L, m):
     copyL = L.copy()
     result = bsp_value(L, m)
     count = 0
+    if len(copyL) <= m or len(copyL) - m == 1:
+        return []
     for i in range(len(L) - 1):
         if count == m:
             break
@@ -35,5 +37,9 @@ def bsp_value(L, m):
 
 L = [2, 15, 31, 46, 56, 98]
 L2 = [2, 4, 6, 7, 10, 14]
+boundaryL = [10, 20, 30]
 print(bsp_solution(L, 2))
 print(bsp_solution(L2, 2))
+print(bsp_solution(boundaryL, 2))
+print(bsp_solution(boundaryL, 3))
+print(bsp_solution(boundaryL, 4))
