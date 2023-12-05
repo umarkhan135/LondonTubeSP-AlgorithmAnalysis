@@ -76,8 +76,8 @@ tube_graph.initialize_adjacency()
 
 # Example: Find the shortest path from station A to station B
 source_station_id = 1  # Replace 'A' with the actual ID of the source station
-destination_station_id = 2  # Replace 'B' with the actual ID of the destination station
-'''
+destination_station_id = 150  # Replace 'B' with the actual ID of the destination station
+
 # Set the destination for heuristic calculation
 tube_graph.set_destination(destination_station_id)
 
@@ -90,43 +90,19 @@ predecessor, path = a_star(tube_graph, source_station_id, destination_station_id
 
 # Output the shortest path
 print("Shortest path from station", source_station_id, "to", destination_station_id, "is:", path)
-'''
-predecessor, distances = dijkstra2(tube_graph, source_station_id)
+
+predecessorDijk, distances = dijkstra2(tube_graph, source_station_id)
 
 # Reconstruct the shortest path
-path = []
+pathDijkstra = []
 current = destination_station_id
-while current is not None and current in predecessor:
-    path.insert(0, current)
-    current = predecessor[current]
+
+while current is not None:
+    pathDijkstra.insert(0, current)  # Insert at the beginning of the list
+    current = predecessorDijk.get(current)
 
 # Output the shortest path
-if path:
-    print("Shortest path from station", source_station_id, "to", destination_station_id, "is:", path)
+if pathDijkstra and pathDijkstra[0] == source_station_id:  # Check if path starts with the source station
+    print("Shortest path from station", source_station_id, "to", destination_station_id, "is:", pathDijkstra)
 else:
     print("No path found from station", source_station_id, "to", destination_station_id)
-
-
-# destination_id = 2
-# tube_graph.set_destination(destination_id)
-
-# station_ids_to_check = [1, 2, 3, 4, 5]  # Example IDs, replace with actual station IDs you're interested in
-
-# for station_id in station_ids_to_check:
-#     heuristic_value = tube_graph.heuristic(station_id)
-#     print(f"Heuristic value for station {station_id} to destination {destination_id}: {heuristic_value}")
-    
-# for station_id in tube_graph.coordinates:
-#     lat, lon = tube_graph.coordinates[station_id]
-#     print(f"Station ID: {station_id}, Latitude: {lat}, Longitude: {lon}")
-
-#     if station_id in tube_graph.edges:
-#         print("Connections:")
-#         for connection in tube_graph.edges[station_id]:
-#             connected_station_id, weight = connection
-#             print(f"  Connected to Station ID: {connected_station_id} with weight (distance): {weight}")
-#     else:
-#         print("No connections")
-#     print()  
-
-
