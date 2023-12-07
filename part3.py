@@ -1,8 +1,4 @@
 import pandas as pd
-import numpy as np
-import time
-import itertools
-import matplotlib.pyplot as plt
 from final_project_part1 import *
 from A_star import *
 from math import *
@@ -17,24 +13,28 @@ def haversine(lon1, lat1, lon2, lat2):
     dlat = lat2 - lat1
     a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
     c = 2 * asin(sqrt(a))
-    r = 6371  # Radius of Earth in kilometers. Use 3956 for miles
+    r = 6371  # Radius of Earth in kilometers
     return c * r
 
 class TubeGraph:
     def __init__(self):
-        self.edges = {}  # Edges will contain tuples of (node, weight)
-        self.coordinates = {}  # To store the latitude and longitude
-        self.destination = None  # To store the destination for the heuristic
+        self.edges = {}
+        self.coordinates = {} 
+        self.destination = None 
 
     def add_station(self, station_id, lat, lon):
         self.coordinates[station_id] = (lat, lon)
 
-    def add_connection(self, station1, station2):
+    def add_connection_by_distance(self, station1, station2):
         lon1, lat1 = self.coordinates[station1]
         lon2, lat2 = self.coordinates[station2]
         weight = haversine(lon1, lat1, lon2, lat2)
         self.edges.setdefault(station1, []).append((station2, weight))
         self.edges.setdefault(station2, []).append((station1, weight))
+
+    def add_connection_by_time(self, station1, station2, time):
+        self.edges.setdefault(station1, []).append((station2, time))
+        self.edges.setdefault(station2, []).append((station1, time))
 
     def set_destination(self, destination_id):
         self.destination = destination_id
@@ -68,41 +68,33 @@ for index, row in stations_df.iterrows():
     tube_graph.add_station(station_id=row['id'], lat=row['latitude'], lon=row['longitude'])
 
 for index, row in connections_df.iterrows():
-    tube_graph.add_connection(station1=row['station1'], station2=row['station2'])
+    tube_graph.add_connection_by_distance(station1=row['station1'], station2=row['station2'])
 
 tube_graph.initialize_adjacency()
 
-# Assuming a_star function, TubeGraph class, and the CSV loading code are already defined
+source_station_id = 11  
+destination_station_id = 163  
 
-# Example: Find the shortest path from station A to station B
-source_station_id = 1  # Replace 'A' with the actual ID of the source station
-destination_station_id = 150  # Replace 'B' with the actual ID of the destination station
-
-# Set the destination for heuristic calculation
 tube_graph.set_destination(destination_station_id)
 
-# Define a wrapper for the heuristic function to match expected format
 def heuristic_wrapper(node):
     return tube_graph.heuristic(node)
 
 # Run the A* algorithm
 predecessor, path = a_star(tube_graph, source_station_id, destination_station_id, heuristic_wrapper)
 
-# Output the shortest path
 print("Shortest path from station", source_station_id, "to", destination_station_id, "is:", path)
 
 predecessorDijk, distances = dijkstra2(tube_graph, source_station_id)
 
-# Reconstruct the shortest path
 pathDijkstra = []
 current = destination_station_id
 
 while current is not None:
-    pathDijkstra.insert(0, current)  # Insert at the beginning of the list
+    pathDijkstra.insert(0, current)  
     current = predecessorDijk.get(current)
 
-# Output the shortest path
-if pathDijkstra and pathDijkstra[0] == source_station_id:  # Check if path starts with the source station
+if pathDijkstra and pathDijkstra[0] == source_station_id: 
     print("Shortest path from station", source_station_id, "to", destination_station_id, "is:", pathDijkstra)
 else:
     print("No path found from station", source_station_id, "to", destination_station_id)
